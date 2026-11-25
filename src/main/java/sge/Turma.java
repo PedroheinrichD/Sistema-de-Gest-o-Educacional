@@ -2,7 +2,9 @@ package sge;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Representa uma turma vinculada a um professor e a um curso.
@@ -12,6 +14,7 @@ public class Turma {
     private final Professor professor;
     private final Curso curso;
     private final List<Aluno> listaAlunos = new ArrayList<>();
+    private final Map<String, List<Avaliacao>> avaliacoesPorMatricula = new HashMap<>();
 
     /**
      * Cria uma turma para um curso e um professor.
@@ -70,10 +73,46 @@ public class Turma {
         for (int i = 0; i < listaAlunos.size(); i++) {
             if (listaAlunos.get(i).getMatricula().equals(aluno.getMatricula())) {
                 listaAlunos.remove(i);
+                avaliacoesPorMatricula.remove(aluno.getMatricula());
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Associa uma avaliação a um aluno matriculado nesta turma.
+     *
+     * @param aluno aluno matriculado na turma
+     * @param avaliacao avaliação a associar
+     * @throws IllegalArgumentException se algum argumento for nulo ou se o
+     *                                  aluno não estiver matriculado na turma
+     */
+    public void associarAvaliacao(Aluno aluno, Avaliacao avaliacao) {
+        validarAlunoMatriculado(aluno);
+        if (avaliacao == null) {
+            throw new IllegalArgumentException("A avaliação é obrigatória.");
+        }
+        avaliacoesPorMatricula
+                .computeIfAbsent(aluno.getMatricula(), matricula -> new ArrayList<>())
+                .add(avaliacao);
+    }
+
+    /**
+     * Retorna as avaliações associadas a um aluno matriculado nesta turma.
+     *
+     * @param aluno aluno matriculado na turma
+     * @return lista não modificável de avaliações do aluno
+     * @throws IllegalArgumentException se o aluno for nulo ou não estiver
+     *                                  matriculado na turma
+     */
+    public List<Avaliacao> getAvaliacoes(Aluno aluno) {
+        validarAlunoMatriculado(aluno);
+        List<Avaliacao> avaliacoes = avaliacoesPorMatricula.get(aluno.getMatricula());
+        if (avaliacoes == null) {
+            return Collections.emptyList();
+        }
+        return Collections.unmodifiableList(avaliacoes);
     }
 
     /**
@@ -129,5 +168,17 @@ public class Turma {
             throw new IllegalArgumentException("O atributo " + atributo + " é obrigatório.");
         }
         return valor;
+    }
+
+    private void validarAlunoMatriculado(Aluno aluno) {
+        if (aluno == null) {
+            throw new IllegalArgumentException("O aluno é obrigatório.");
+        }
+        for (Aluno alunoMatriculado : listaAlunos) {
+            if (alunoMatriculado.getMatricula().equals(aluno.getMatricula())) {
+                return;
+            }
+        }
+        throw new IllegalArgumentException("O aluno não está matriculado nesta turma.");
     }
 }

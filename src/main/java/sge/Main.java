@@ -14,13 +14,21 @@ public class Main {
      */
     public static void main(String[] args) {
         Curso curso = new Curso("Engenharia de Software", "ES001", 3200);
+        
         Aluno aluno = new Aluno("Pedro Dias", "2026001", curso);
         Aluno segundaAluna = new Aluno("Maria Costa", "2026002", curso);
+        
         Professor professor = new Professor("Carlos Souza", "Programação", "P001");
+        
         Turma turma = new Turma("T2026-01", professor, curso);
         turma.adicionarAluno(aluno);
         turma.adicionarAluno(segundaAluna);
 
+        Avaliacao avaliacao = new Avaliacao("Prova 1");
+        avaliacao.atribuirNota(9.0);
+        turma.associarAvaliacao(aluno, avaliacao);
+
+        
         System.out.println("Curso: " + curso.getNome() + " (" + curso.getCodigo()
                 + "), " + curso.getCargaHoraria() + " horas");
         System.out.println("Aluno: " + aluno.getNome() + ", matrícula "
@@ -28,5 +36,8 @@ public class Main {
         System.out.println("Professor: " + professor.getNome() + ", especialidade "
                 + professor.getEspecialidade() + ", registro " + professor.getRegistro());
         System.out.println(turma.gerarResumo());
+        System.out.println("Avaliação de " + aluno.getNome() + ": "
+                + turma.getAvaliacoes(aluno).get(0).getDescricao() + " - nota "
+                + turma.getAvaliacoes(aluno).get(0).getNota());
     }
 }
