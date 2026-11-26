@@ -13,7 +13,8 @@ public class Main {
      * @param args argumentos da linha de comando (não utilizados)
      */
     public static void main(String[] args) {
-        Curso curso = new Curso("Engenharia de Software", "ES001", 3200);
+        Curso curso = new CursoPresencial("Engenharia de Software", "ES001", 3200, "Sala 101");
+        Curso cursoEad = new CursoEAD("Administração", "AD001", 2400, "Moodle");
         
         Aluno aluno = new Aluno("Pedro Dias", "2026001", curso);
         Aluno segundaAluna = new Aluno("Maria Costa", "2026002", curso);
@@ -29,8 +30,8 @@ public class Main {
         turma.associarAvaliacao(aluno, avaliacao);
 
         
-        System.out.println("Curso: " + curso.getNome() + " (" + curso.getCodigo()
-                + "), " + curso.getCargaHoraria() + " horas");
+        System.out.println(curso.detalharCurso());
+        System.out.println(cursoEad.detalharCurso());
         System.out.println("Aluno: " + aluno.getNome() + ", matrícula "
                 + aluno.getMatricula() + ", curso " + aluno.getCurso().getNome());
         System.out.println("Professor: " + professor.getNome() + ", especialidade "

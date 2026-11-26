@@ -53,7 +53,25 @@ public class Curso {
         return cargaHoraria;
     }
 
-    private static String validarTexto(String valor, String atributo) {
+    /**
+     * Retorna os dados básicos do curso.
+     *
+     * @return detalhes do curso
+     */
+    public String detalharCurso() {
+        return "Curso: " + nome + " (" + codigo + "), carga horária: "
+                + cargaHoraria + " horas";
+    }
+
+    /**
+     * Valida e retorna um texto obrigatório.
+     *
+     * @param valor texto a validar
+     * @param atributo nome do atributo usado na mensagem de erro
+     * @return texto validado
+     * @throws IllegalArgumentException se o texto for nulo ou vazio
+     */
+    protected static String validarTexto(String valor, String atributo) {
         if (valor == null || valor.trim().isEmpty()) {
             throw new IllegalArgumentException("O atributo " + atributo + " é obrigatório.");
         }
