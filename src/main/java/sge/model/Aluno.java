@@ -1,4 +1,4 @@
-package sge;
+package sge.model;
 
 /**
  * Representa um aluno matriculado em um curso.

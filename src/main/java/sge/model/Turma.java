@@ -1,4 +1,4 @@
-package sge;
+package sge.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

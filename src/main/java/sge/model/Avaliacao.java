@@ -1,4 +1,4 @@
-package sge;
+package sge.model;
 
 /**
  * Representa uma avaliação de um aluno.

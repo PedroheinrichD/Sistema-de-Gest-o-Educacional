@@ -1,4 +1,4 @@
-package sge;
+package sge.model;
 
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;

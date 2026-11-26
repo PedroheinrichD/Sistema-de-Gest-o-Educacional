@@ -1,19 +1,22 @@
 # Sistema-de-Gest-o-Educacional
 
-## Entidades iniciais
+## Organização em camadas
 
-O projeto contém as entidades `Aluno`, `Professor` e `Administrador`, que
-herdam os dados comuns de `Usuario` e implementam a interface `Autenticacao`.
-As senhas são armazenadas como hashes PBKDF2 com salt aleatório; o exemplo em
-`Main` usa credenciais demonstrativas e não deve ser usado como configuração
-de produção. O curso do aluno é representado por uma referência à entidade
-`Curso`. `Aluno`, `Professor` e `Curso` implementam `GeradorRelatorio`, e a
-demonstração oferece um menu para gerar vários relatórios em sequência.
+O código Java está separado nos pacotes:
+
+- `sge.model`: entidades, autenticação e geração polimórfica de relatórios.
+- `sge.repository`: repositórios genéricos e implementação temporária em memória.
+- `sge.service`: regras e composição dos relatórios.
+- `sge.ui`: menu interativo de relatórios.
+- `sge`: classe `Main`, responsável por integrar as camadas.
+
+As senhas dos usuários são armazenadas como hashes PBKDF2 com salt aleatório.
+As credenciais e entidades inicializadas em `Main` são demonstrativas.
 
 Para compilar e executar a demonstração com o JDK instalado, no PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force out
-javac -d out src\main\java\sge\*.java
+javac -d out (Get-ChildItem -Recurse -Filter *.java src\main\java | ForEach-Object { $_.FullName })
 java -cp out sge.Main
 ```

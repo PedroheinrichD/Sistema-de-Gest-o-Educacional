@@ -1,4 +1,4 @@
-package sge;
+package sge.model;
 
 /**
  * Define a autenticação de um usuário por login e senha.

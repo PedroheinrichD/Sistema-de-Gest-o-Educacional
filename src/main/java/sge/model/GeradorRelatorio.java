@@ -1,4 +1,4 @@
-package sge;
+package sge.model;
 
 /**
  * Define uma entidade capaz de gerar seu próprio relatório.
