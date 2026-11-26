@@ -1,5 +1,11 @@
 package sge;
 
+import java.util.ArrayList;
+import java.util.AbstractMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 /**
  * Demonstra a criação das entidades básicas do SGE.
  */
@@ -51,5 +57,52 @@ public class Main {
         System.out.println("Avaliação de " + aluno.getNome() + ": "
                 + turma.getAvaliacoes(aluno).get(0).getDescricao() + " - nota "
                 + turma.getAvaliacoes(aluno).get(0).getNota());
+
+        List<Map.Entry<String, GeradorRelatorio>> relatorios = new ArrayList<>();
+        relatorios.add(new AbstractMap.SimpleImmutableEntry<>("Aluno: " + aluno.getNome(), aluno));
+        relatorios.add(
+                new AbstractMap.SimpleImmutableEntry<>("Aluna: " + segundaAluna.getNome(),
+                        segundaAluna));
+        relatorios.add(new AbstractMap.SimpleImmutableEntry<>(
+                "Professor: " + professor.getNome(), professor));
+        relatorios.add(new AbstractMap.SimpleImmutableEntry<>("Curso: " + curso.getNome(), curso));
+        relatorios.add(
+                new AbstractMap.SimpleImmutableEntry<>("Curso: " + cursoEad.getNome(), cursoEad));
+        exibirMenuRelatorios(relatorios);
+    }
+
+    private static void exibirMenuRelatorios(
+            List<Map.Entry<String, GeradorRelatorio>> opcoes) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("\n=== Menu de relatórios ===");
+                for (int i = 0; i < opcoes.size(); i++) {
+                    System.out.println((i + 1) + " - " + opcoes.get(i).getKey());
+                }
+                System.out.println("0 - Sair");
+                System.out.print("Escolha uma opção: ");
+
+                if (!scanner.hasNextLine()) {
+                    return;
+                }
+                String entrada = scanner.nextLine().trim();
+                int opcao;
+                try {
+                    opcao = Integer.parseInt(entrada);
+                } catch (NumberFormatException e) {
+                    System.out.println("Opção inválida. Informe um número do menu.");
+                    continue;
+                }
+
+                if (opcao == 0) {
+                    return;
+                }
+                if (opcao < 1 || opcao > opcoes.size()) {
+                    System.out.println("Opção inválida. Selecione uma opção do menu.");
+                    continue;
+                }
+                System.out.println(opcoes.get(opcao - 1).getValue().gerarRelatorio());
+            }
+        }
     }
 }

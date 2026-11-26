@@ -3,7 +3,7 @@ package sge;
 /**
  * Representa um curso oferecido pelo sistema.
  */
-public class Curso {
+public class Curso implements GeradorRelatorio {
     private final String nome;
     private final String codigo;
     private final int cargaHoraria;
@@ -61,6 +61,16 @@ public class Curso {
     public String detalharCurso() {
         return "Curso: " + nome + " (" + codigo + "), carga horária: "
                 + cargaHoraria + " horas";
+    }
+
+    /**
+     * Gera um relatório com os dados do curso e sua modalidade.
+     *
+     * @return relatório do curso
+     */
+    @Override
+    public String gerarRelatorio() {
+        return "Relatório do curso\n" + detalharCurso();
     }
 
     /**

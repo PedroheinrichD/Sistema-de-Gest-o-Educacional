@@ -3,7 +3,7 @@ package sge;
 /**
  * Representa um professor do sistema.
  */
-public class Professor extends Usuario implements Autenticacao {
+public class Professor extends Usuario implements Autenticacao, GeradorRelatorio {
     private final String especialidade;
     private final String registro;
 
@@ -40,6 +40,19 @@ public class Professor extends Usuario implements Autenticacao {
      */
     public String getRegistro() {
         return registro;
+    }
+
+    /**
+     * Gera um relatório com os dados profissionais do professor.
+     *
+     * @return relatório do professor
+     */
+    @Override
+    public String gerarRelatorio() {
+        return "Relatório do professor\n"
+                + "Nome: " + getNome() + "\n"
+                + "Registro: " + registro + "\n"
+                + "Especialidade: " + especialidade;
     }
 
     /**

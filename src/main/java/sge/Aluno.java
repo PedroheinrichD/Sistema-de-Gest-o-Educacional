@@ -3,7 +3,7 @@ package sge;
 /**
  * Representa um aluno matriculado em um curso.
  */
-public class Aluno extends Usuario implements Autenticacao {
+public class Aluno extends Usuario implements Autenticacao, GeradorRelatorio {
     private final String matricula;
     private final Curso curso;
 
@@ -43,6 +43,19 @@ public class Aluno extends Usuario implements Autenticacao {
      */
     public Curso getCurso() {
         return curso;
+    }
+
+    /**
+     * Gera um relatório com os dados do aluno e do curso associado.
+     *
+     * @return relatório do aluno
+     */
+    @Override
+    public String gerarRelatorio() {
+        return "Relatório do aluno\n"
+                + "Nome: " + getNome() + "\n"
+                + "Matrícula: " + matricula + "\n"
+                + "Curso: " + curso.detalharCurso();
     }
 
     /**
