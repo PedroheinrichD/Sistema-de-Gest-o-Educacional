@@ -3,8 +3,7 @@ package sge;
 /**
  * Representa um professor do sistema.
  */
-public class Professor {
-    private final String nome;
+public class Professor extends Usuario implements Autenticacao {
     private final String especialidade;
     private final String registro;
 
@@ -14,21 +13,15 @@ public class Professor {
      * @param nome nome do professor, não nulo nem vazio
      * @param especialidade especialidade do professor, não nula nem vazia
      * @param registro registro do professor, não nulo nem vazio
+     * @param login login do professor, não nulo nem vazio
+     * @param senha senha do professor, não nula nem vazia
      * @throws IllegalArgumentException se algum texto obrigatório for nulo ou vazio
      */
-    public Professor(String nome, String especialidade, String registro) {
-        this.nome = validarTexto(nome, "nome");
+    public Professor(
+            String nome, String especialidade, String registro, String login, String senha) {
+        super(nome, login, senha);
         this.especialidade = validarTexto(especialidade, "especialidade");
         this.registro = validarTexto(registro, "registro");
-    }
-
-    /**
-     * Retorna o nome do professor.
-     *
-     * @return nome do professor
-     */
-    public String getNome() {
-        return nome;
     }
 
     /**
@@ -49,10 +42,15 @@ public class Professor {
         return registro;
     }
 
-    private static String validarTexto(String valor, String atributo) {
-        if (valor == null || valor.trim().isEmpty()) {
-            throw new IllegalArgumentException("O atributo " + atributo + " é obrigatório.");
-        }
-        return valor;
+    /**
+     * Verifica as credenciais do professor.
+     *
+     * @param login login informado
+     * @param senha senha informada
+     * @return {@code true} se as credenciais forem válidas
+     */
+    @Override
+    public boolean autenticar(String login, String senha) {
+        return validarCredenciais(login, senha);
     }
 }

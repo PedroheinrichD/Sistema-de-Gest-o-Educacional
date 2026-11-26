@@ -2,9 +2,12 @@
 
 ## Entidades iniciais
 
-O projeto contém as entidades `Aluno`, `Professor` e `Curso`, com validação dos
-atributos obrigatórios nos construtores. O curso do aluno é representado por uma
-referência à entidade `Curso`.
+O projeto contém as entidades `Aluno`, `Professor` e `Administrador`, que
+herdam os dados comuns de `Usuario` e implementam a interface `Autenticacao`.
+As senhas são armazenadas como hashes PBKDF2 com salt aleatório; o exemplo em
+`Main` usa credenciais demonstrativas e não deve ser usado como configuração
+de produção. O curso do aluno é representado por uma referência à entidade
+`Curso`.
 
 Para compilar e executar a demonstração com o JDK instalado, no PowerShell:
 
